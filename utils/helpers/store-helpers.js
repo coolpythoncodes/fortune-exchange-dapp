@@ -5,6 +5,7 @@ const initialState = {
     wager: '',
     ctcInfo: '',
     resolveAcceptP: '',
+    fortune: '',
 }
 
 export {

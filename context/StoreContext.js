@@ -20,6 +20,28 @@ const StoreContextProvider = ({ children }) => {
         return bal
     }
 
+    const toSu = (au) => reach.formatCurrency(4, au)
+    const toAu = (su) => reach.parseCurrency(su)
+    const suStr = () => reach.standardUnit
+
+    const CommonInteract = {
+        reportPayment: (payment) => {
+            alert(`Alice paid ${toSu(payment)} ${suStr} to the contract`)
+        },
+        reportCancellation: () => {
+            console.log('Alice cancelled the order')
+        },
+    }
+
+    const Deployer = {
+        ...CommonInteract,
+        price: reach.parseCurrency(+state.wager),
+        fortune: state.fortune,
+        reportFortuneReady: (price) => {
+            alert(`Bob has a fortune for sale at ${toSu(price)} ${suStr}`)
+        },
+    }
+
     return (
         <StoreContext.Provider
             value={{
@@ -27,6 +49,7 @@ const StoreContextProvider = ({ children }) => {
                 dispatch,
                 reach,
                 getBalance,
+                Deployer,
             }}>
             {children}
         </StoreContext.Provider>
