@@ -14,12 +14,19 @@ const StoreContext = createContext()
 const StoreContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(storeReducer, initialState)
 
+    const getBalance = async (acc) => {
+        const balAtomic = await reach.balanceOf(acc)
+        const bal = reach.formatCurrency(balAtomic, 4)
+        return bal
+    }
+
     return (
         <StoreContext.Provider
             value={{
                 ...state,
                 dispatch,
                 reach,
+                getBalance,
             }}>
             {children}
         </StoreContext.Provider>
