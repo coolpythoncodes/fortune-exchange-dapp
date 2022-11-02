@@ -1,14 +1,13 @@
 import { createContext, useContext, useReducer } from "react";
-import { ALGO_MyAlgoConnect as MyAlgoConnect } from '@reach-sh/stdlib';
+// import { ALGO_WalletConnect as WalletConnect } from '@reach-sh/stdlib';
 import { loadStdlib } from '@reach-sh/stdlib'
 import { ACTION_TYPES, storeReducer } from "reducer/store-reducer";
 import { initialState } from "utils/helpers/store-helpers";
 import { useRouter } from "next/router";
 
 const reach = loadStdlib('ALGO')
-reach.setWalletFallback(reach.walletFallback({
-    providerEnv: 'TestNet', MyAlgoConnect
-}));
+// reach.setWalletFallback(reach.walletFallback({
+//     providerEnv: 'TestNet', WalletConnect }));
 
 const StoreContext = createContext()
 
@@ -21,9 +20,9 @@ const StoreContextProvider = ({ children }) => {
         return bal
     }
 
-    const toSu = (au) => reach.formatCurrency(4, au)
+    const toSu = (au) => reach.formatCurrency(au)
     const toAu = (su) => reach.parseCurrency(su)
-    const suStr = () => reach.standardUnit
+    const suStr = reach.standardUnit
 
     const CommonInteract = {
         reportPayment: (payment) => {
@@ -71,6 +70,10 @@ const StoreContextProvider = ({ children }) => {
             })
             return aliceDecision
         },
+        reportFortune: (fortuneText) => {
+            // router.push('/report-fortune')
+            alert(`Here is a fortune from Bob: ${fortuneText}`)
+        }
     }
 
     return (

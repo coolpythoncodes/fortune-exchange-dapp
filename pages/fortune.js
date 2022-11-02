@@ -20,18 +20,18 @@ const Fortune = () => {
     }
     return (
         <div>
-            <h4>Provide Fortune</h4>
+            <h4 className="mb-2">Provide Fortune</h4>
             <form onSubmit={handleSubmit}>
                 <Input
                     name="fortune"
                     required
                     type="text"
                     placeholder="Enter fortune"
-                    value={formData}
+                    value={formData.fortune}
                     handleChangeText={handleChangeText}
                 />
 
-                <Button title='submit' />
+                <Button title='submit' className="mt-5" />
             </form>
         </div>
     )

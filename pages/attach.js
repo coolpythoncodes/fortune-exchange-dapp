@@ -35,7 +35,7 @@ const Attach = () => {
             contractInfoAddr.then(addr => {
                 if (addr) {
                     backend.Alice(contract, Attacher)
-                    router.push('/accept-terms')
+                    router.push('/wait-for-turn')
                 }
             })
                 .catch(() => toast.error('Verify contract info failed'))

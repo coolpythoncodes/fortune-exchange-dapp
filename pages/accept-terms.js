@@ -19,7 +19,7 @@ const AcceptTerms = () => {
                 type: ACTION_TYPES.ENABLE_BUTTON
             })
         } else {
-            resolveAcceptP()
+            // resolveAcceptP()
             router.push('/wait-for-turn')
             dispatch({
                 type: ACTION_TYPES.ENABLE_BUTTON

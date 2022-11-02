@@ -1,7 +1,7 @@
 const WaitForTurn = () => {
     return (
         <div>
-            <p>Waiting for the other player to begin the game...</p>
+            <p>Waiting for Bob to show you some fortunes...</p>
         </div>
     )
 }

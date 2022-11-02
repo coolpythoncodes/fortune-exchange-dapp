@@ -8,6 +8,7 @@ export const ACTION_TYPES = {
     REPORT_PAYMENT: 'report_payment',
     CONFIRM_PAYMENT: 'confirm_payment',
     FORTUNE: 'fortune',
+    SET_WAGER: 'set_wager',
 }
 
 
@@ -49,13 +50,20 @@ export const storeReducer = (state, action) => {
             }
         }
 
-        case ACTION_TYPES.ATTACH: {
+        case ACTION_TYPES.SET_WAGER: {
             return {
                 ...state,
-                wager: payload.wager,
-                resolveAcceptP: payload.resolveAcceptP
+                wager: payload
             }
         }
+
+        // case ACTION_TYPES.ATTACH: {
+        //     return {
+        //         ...state,
+        //         wager: payload.wager,
+        //         resolveAcceptP: payload.resolveAcceptP
+        //     }
+        // }
 
         case ACTION_TYPES.REPORT_PAYMENT: {
             return {
@@ -67,7 +75,7 @@ export const storeReducer = (state, action) => {
         case ACTION_TYPES.CONFIRM_PAYMENT: {
             return {
                 ...state,
-                resolveDecisionP: payload.resolveDecisionP,
+                resolveAliceDecisionP: payload.resolveAliceDecisionP,
                 payment: payload.payment,
             }
         }
