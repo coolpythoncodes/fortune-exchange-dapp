@@ -13,13 +13,13 @@ const AliceInteract = {
   ...commonInteract,
   confirmPayment: Fun([UInt], Bool),
   reportFortune: Fun([Bytes(128)], Null),
+  reportFortuneReady: Fun([UInt], Null),
 }
 
 const BobInteract = {
   ...commonInteract,
   price: UInt,
   fortune: Fun([],Bytes(128)),
-  reportFortuneReady: Fun([UInt], Null),
 }
 
 
@@ -34,15 +34,17 @@ export const main = Reach.App(() => {
   Bob.publish(price);
   commit()
 
-  Alice.pay(price)
+  Alice.interact.reportFortuneReady(price)
+  Alice.publish()
+  // Alice.pay(price)
 
   var willPurchase = false
-  invariant(balance() == price)
+  invariant(balance() == 0)
   while (willPurchase == false) {
     commit()
 
     Bob.only(() => {
-      interact.reportFortuneReady(price)
+      // interact.reportFortuneReady(price)
       const fortune = declassify(interact.fortune())
     });
     Bob.publish(fortune);
@@ -62,16 +64,16 @@ export const main = Reach.App(() => {
       willPurchase = willPay
       continue
     } else {
-      // commit()
+      commit()
+      Alice.pay(price)
+      each([Alice,Bob], () => interact.reportPayment(price));
+      transfer(price).to(Bob)
       willPurchase = willPay
       continue
     }
 
   }
 
-  transfer(price).to(Bob)
   commit()
-
-
   exit()
 })

@@ -42,9 +42,10 @@ const Wager = () => {
 
     return (
         <form onSubmit={handleSubmit} className=''>
+            <p className="mb-5">How much do you want to charge for your fortune</p>
             <div className="flex items-center space-x-3">
                 <Input 
-                placeholder='Enter wager'
+                placeholder='Enter price'
                 type='number'
                 value={wager}
                 handleChangeText={(e)=>setWager(e.target.value)}
@@ -53,7 +54,7 @@ const Wager = () => {
                 <span >{reach.standardUnit}</span>
             </div>
             <br />
-            <Button title='Set wager' />
+            <Button title='Set price' />
         </form>
     )
 }

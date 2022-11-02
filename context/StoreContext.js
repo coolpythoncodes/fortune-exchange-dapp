@@ -1,13 +1,13 @@
 import { createContext, useContext, useReducer } from "react";
-// import { ALGO_WalletConnect as WalletConnect } from '@reach-sh/stdlib';
+import { ALGO_WalletConnect as WalletConnect } from '@reach-sh/stdlib';
 import { loadStdlib } from '@reach-sh/stdlib'
 import { ACTION_TYPES, storeReducer } from "reducer/store-reducer";
 import { initialState } from "utils/helpers/store-helpers";
 import { useRouter } from "next/router";
 
 const reach = loadStdlib('ALGO')
-// reach.setWalletFallback(reach.walletFallback({
-//     providerEnv: 'TestNet', WalletConnect }));
+reach.setWalletFallback(reach.walletFallback({
+    providerEnv: 'TestNet', WalletConnect }));
 
 const StoreContext = createContext()
 
@@ -33,7 +33,7 @@ const StoreContextProvider = ({ children }) => {
             })
         },
         reportCancellation: () => {
-            router.push('/report-cancellation')
+            alert('Alice cancelled the order')
         },
         reportFortuneReady: (price) => {
             alert(`Bob has a fortune for sale at ${toSu(price)} ${suStr}`)
@@ -53,7 +53,7 @@ const StoreContextProvider = ({ children }) => {
             })
             return fortune
         },
-        
+
     }
 
     const Attacher = {
@@ -69,7 +69,12 @@ const StoreContextProvider = ({ children }) => {
                     }
                 })
             })
-            console.log('alice decison',aliceDecision)
+            // console.log('alice decison',aliceDecision)
+            // if(!aliceDecision && state.role.toLowerCase() == 'deployer'){
+            //     router.push('/fortune')
+            // } else if(!aliceDecision && state.role.toLowerCase() == 'attacher') {
+            //     router.push('/wait-for-turn')
+            // }
             return aliceDecision
         },
         reportFortune: (fortuneText) => {

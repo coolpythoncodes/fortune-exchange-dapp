@@ -38,7 +38,7 @@ const SelectRole = () => {
                         disabled={isButtonDisabled}
                     />
                     <p className="mt-2">
-                        Set the wager, deploy the contract
+                        Fix the price of the fortune, deploy the contract
                     </p>
                 </div>
 
@@ -51,7 +51,7 @@ const SelectRole = () => {
 
                     />
                     <p className="mt-2">
-                        Attach to the Deployer's contract
+                        Attach to the Deployer's contract and pays for the fortune
                     </p>
                 </div>
 

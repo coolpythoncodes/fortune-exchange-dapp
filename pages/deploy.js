@@ -38,7 +38,7 @@ const Deploy = () => {
 
     return (
         <div>
-            <p className="mb-5">Wager(pay to deploy): {`${wager} ${reach.standardUnit}`}</p>
+            <p className="mb-5">Price of your  Fortune: {`${wager} ${reach.standardUnit}`}</p>
             <Button title='Deploy' handleClick={deploy} />
         </div>
     )
