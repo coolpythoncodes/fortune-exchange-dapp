@@ -35,6 +35,9 @@ const StoreContextProvider = ({ children }) => {
         reportCancellation: () => {
             router.push('/report-cancellation')
         },
+        reportFortuneReady: (price) => {
+            alert(`Bob has a fortune for sale at ${toSu(price)} ${suStr}`)
+        },
     }
 
     const Deployer = {
@@ -50,9 +53,7 @@ const StoreContextProvider = ({ children }) => {
             })
             return fortune
         },
-        reportFortuneReady: (price) => {
-            alert(`Bob has a fortune for sale at ${toSu(price)} ${suStr}`)
-        },
+        
     }
 
     const Attacher = {
@@ -68,6 +69,7 @@ const StoreContextProvider = ({ children }) => {
                     }
                 })
             })
+            console.log('alice decison',aliceDecision)
             return aliceDecision
         },
         reportFortune: (fortuneText) => {
