@@ -18,7 +18,7 @@ const AliceInteract = {
 const BobInteract = {
   ...commonInteract,
   price: UInt,
-  fortune: Bytes(128),
+  fortune: Fun([],Bytes(128)),
   reportFortuneReady: Fun([UInt], Null),
 }
 
@@ -43,7 +43,7 @@ export const main = Reach.App(() => {
 
     Bob.only(() => {
       interact.reportFortuneReady(price)
-      const fortune = declassify(interact.fortune)
+      const fortune = declassify(interact.fortune())
     });
     Bob.publish(fortune);
     commit()

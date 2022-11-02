@@ -14,8 +14,8 @@ const Home = () => {
   const connectAccount = async () => {
     dispatch({ type: ACTION_TYPES.DISABLE_BUTTON })
     try {
-    //   const acc = await reach.getDefaultAccount()
-      const acc = await reach.newTestAccount(startingBalance)
+      const acc = await reach.getDefaultAccount()
+      // const acc = await reach.newTestAccount(startingBalance)
 
       dispatch({
         type: ACTION_TYPES.CONNECT_ACCOUNT,

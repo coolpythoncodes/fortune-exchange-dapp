@@ -1,19 +1,20 @@
 import { createContext, useContext, useReducer } from "react";
-// import { ALGO_MyAlgoConnect as MyAlgoConnect } from '@reach-sh/stdlib';
+import { ALGO_MyAlgoConnect as MyAlgoConnect } from '@reach-sh/stdlib';
 import { loadStdlib } from '@reach-sh/stdlib'
-import { storeReducer } from "reducer/store-reducer";
+import { ACTION_TYPES, storeReducer } from "reducer/store-reducer";
 import { initialState } from "utils/helpers/store-helpers";
+import { useRouter } from "next/router";
 
 const reach = loadStdlib('ALGO')
-// reach.setWalletFallback(reach.walletFallback({
-//     providerEnv: 'TestNet', MyAlgoConnect
-// }));
+reach.setWalletFallback(reach.walletFallback({
+    providerEnv: 'TestNet', MyAlgoConnect
+}));
 
 const StoreContext = createContext()
 
 const StoreContextProvider = ({ children }) => {
     const [state, dispatch] = useReducer(storeReducer, initialState)
-
+    const router = useRouter()
     const getBalance = async (acc) => {
         const balAtomic = await reach.balanceOf(acc)
         const bal = reach.formatCurrency(balAtomic, 4)
@@ -26,19 +27,49 @@ const StoreContextProvider = ({ children }) => {
 
     const CommonInteract = {
         reportPayment: (payment) => {
-            alert(`Alice paid ${toSu(payment)} ${suStr} to the contract`)
+            router.push('/report-payment')
+            dispatch({
+                type: ACTION_TYPES.REPORT_PAYMENT,
+                payload: payment
+            })
         },
         reportCancellation: () => {
-            console.log('Alice cancelled the order')
+            router.push('/report-cancellation')
         },
     }
 
     const Deployer = {
         ...CommonInteract,
         price: reach.parseCurrency(+state.wager),
-        fortune: state.fortune,
+        fortune: async () => {
+            router.push('/fortune')
+            const fortune = await new Promise(resolveFortuneP => {
+                dispatch({
+                    type: ACTION_TYPES.FORTUNE,
+                    payload: resolveFortuneP,
+                })
+            })
+            return fortune
+        },
         reportFortuneReady: (price) => {
             alert(`Bob has a fortune for sale at ${toSu(price)} ${suStr}`)
+        },
+    }
+
+    const Attacher = {
+        ...CommonInteract,
+        confirmPayment: async (payment) => {
+            router.push('/confirm-payment')
+            const aliceDecision = await new Promise(resolveAliceDecisionP => {
+                dispatch({
+                    type: ACTION_TYPES.CONFIRM_PAYMENT,
+                    payload: {
+                        resolveAliceDecisionP,
+                        payment,
+                    }
+                })
+            })
+            return aliceDecision
         },
     }
 
@@ -50,6 +81,11 @@ const StoreContextProvider = ({ children }) => {
                 reach,
                 getBalance,
                 Deployer,
+                Attacher,
+                toSu,
+                // payment,
+                suStr,
+                toAu,
             }}>
             {children}
         </StoreContext.Provider>

@@ -5,6 +5,9 @@ export const ACTION_TYPES = {
     SELECT_ROLE: 'select_role',
     DEPLOY: 'deploy',
     ATTACH: 'attach',
+    REPORT_PAYMENT: 'report_payment',
+    CONFIRM_PAYMENT: 'confirm_payment',
+    FORTUNE: 'fortune',
 }
 
 
@@ -51,6 +54,28 @@ export const storeReducer = (state, action) => {
                 ...state,
                 wager: payload.wager,
                 resolveAcceptP: payload.resolveAcceptP
+            }
+        }
+
+        case ACTION_TYPES.REPORT_PAYMENT: {
+            return {
+                ...state,
+                payment: payload,
+            }
+        }
+
+        case ACTION_TYPES.CONFIRM_PAYMENT: {
+            return {
+                ...state,
+                resolveDecisionP: payload.resolveDecisionP,
+                payment: payload.payment,
+            }
+        }
+
+        case ACTION_TYPES.FORTUNE: {
+            return {
+                ...state,
+                resolveFunctionP: payload,
             }
         }
 
